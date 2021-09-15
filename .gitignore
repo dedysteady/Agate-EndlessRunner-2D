@@ -5,6 +5,8 @@
 /[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
 
@@ -23,7 +25,6 @@
 
 # Visual Studio cache directory
 .vs/
-.vsconfig
 
 # Gradle cache directory
 .gradle/
@@ -54,6 +55,10 @@ ExportedObj/
 # Unity3D generated file on crash reports
 sysinfo.txt
 
+# Builds
+*.apk
+*.aab
+*.unitypackage
 
 # Crashlytics generated file
 crashlytics-build.properties

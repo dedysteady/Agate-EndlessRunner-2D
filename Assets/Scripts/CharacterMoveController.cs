@@ -15,6 +15,17 @@ public class CharacterMoveController : MonoBehaviour
     public float groundRaycastDistance;
     public LayerMask groundLayerMask;
 
+    [Header("Scoring")]
+    public ScoreController score;
+    public float scoringRatio;
+
+    [Header("GameOver")]
+    public GameObject gameOverScreen;
+    public float fallPositionY;
+
+    [Header("Camera")]
+    public CameraMoveController gameCamera;
+
     private Rigidbody2D rig;
     private Animator anim;
     private CharacterSoundController sound;
@@ -22,11 +33,15 @@ public class CharacterMoveController : MonoBehaviour
     private bool isJumping;
     private bool isOnGround;
 
+    private float lastPositionX;
+
     private void Start()
     {
         rig = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         sound = GetComponent<CharacterSoundController>();
+
+        lastPositionX = transform.position.x;
     }
 
     private void Update()
@@ -43,6 +58,22 @@ public class CharacterMoveController : MonoBehaviour
 
         // change animation
         anim.SetBool("isOnGround", isOnGround);
+
+         // calculate score
+        int distancePassed = Mathf.FloorToInt(transform.position.x - lastPositionX);
+        int scoreIncrement = Mathf.FloorToInt(distancePassed / scoringRatio);
+
+        if (scoreIncrement > 0)
+        {
+            score.IncreaseCurrentScore(scoreIncrement);
+            lastPositionX += distancePassed;
+        }
+
+        // game over
+        if (transform.position.y < fallPositionY)
+        {
+            GameOver();
+        }
     }
 
     private void FixedUpdate()
@@ -72,6 +103,21 @@ public class CharacterMoveController : MonoBehaviour
         velocityVector.x = Mathf.Clamp(velocityVector.x + moveAccel * Time.deltaTime, 0.0f, maxSpeed);
 
         rig.velocity = velocityVector;
+    }
+
+    private void GameOver()
+    {
+        // set high score
+        score.FinishScoring();
+
+        // stop camera movement
+        gameCamera.enabled = false;
+
+        // show gameover
+        gameOverScreen.SetActive(true);
+
+        // disable this too
+        this.enabled = false;
     }
 
     private void OnDrawGizmos()
