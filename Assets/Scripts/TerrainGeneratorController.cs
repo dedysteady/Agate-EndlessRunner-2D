@@ -49,6 +49,7 @@ public class TerrainGeneratorController : MonoBehaviour
         }
     }
 
+    //Terrain yang muncul diawal adalah Terrain yang dipilih
     private void GenerateTerrain(float posX, TerrainTemplateController forceTerrain = null)
     {
         GameObject newTerrain = null;

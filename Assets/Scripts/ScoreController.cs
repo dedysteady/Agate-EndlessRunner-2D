@@ -22,6 +22,7 @@ public class ScoreController : MonoBehaviour
         return currentScore;
     }
 
+    //add score sfx
     public void IncreaseCurrentScore(int increment)
     {
         currentScore += increment;
