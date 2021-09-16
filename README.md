@@ -3,8 +3,9 @@ This Project for Independen Study at Agate Academy
 
 # Additional Features
 - More cheerful with beautiful background (static)
-- add backsound
-- More ground terrain and some challenge
+- add backsound and sound fx
+- More ground template and some challenge
+- More speed
   
 # How To Run
 - Download the repository
