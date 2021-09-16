@@ -6,7 +6,7 @@ public class ScoreController : MonoBehaviour
 {
     [Header("Score Highlight")]
     public int scoreHighlightRange;
-
+    public CharacterSoundController sound;
     private int currentScore = 0;
     private int lastScoreHighlight = 0;
 
@@ -28,9 +28,10 @@ public class ScoreController : MonoBehaviour
 
         if (currentScore - lastScoreHighlight > scoreHighlightRange)
         {
-            
+            sound.PlayScoreHighlight();
             lastScoreHighlight += scoreHighlightRange;
         }
+
     }
 
     public void FinishScoring()
@@ -38,6 +39,7 @@ public class ScoreController : MonoBehaviour
         // set high score
         if (currentScore > ScoreData.highScore)
         {
+
             ScoreData.highScore = currentScore;
         }
     }

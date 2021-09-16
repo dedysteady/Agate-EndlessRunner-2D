@@ -8,6 +8,9 @@ public class CharacterMoveController : MonoBehaviour
     public float moveAccel;
     public float maxSpeed;
 
+    //Additional Features
+    public float counter;
+
     [Header("Jump")]
     public float jumpAccel;
 
@@ -49,6 +52,7 @@ public class CharacterMoveController : MonoBehaviour
         // read input
         if (Input.GetMouseButtonDown(0))
         {
+        
             if (isOnGround)
             {
                 isJumping = true;
@@ -69,10 +73,17 @@ public class CharacterMoveController : MonoBehaviour
             lastPositionX += distancePassed;
         }
 
+        //Additional Features
+        if (maxSpeed < 20)
+        {
+            AddSpeed();
+        }
+
         // game over
         if (transform.position.y < fallPositionY)
         {
             GameOver();
+            sound.Finish();
         }
     }
 
@@ -103,6 +114,18 @@ public class CharacterMoveController : MonoBehaviour
         velocityVector.x = Mathf.Clamp(velocityVector.x + moveAccel * Time.deltaTime, 0.0f, maxSpeed);
 
         rig.velocity = velocityVector;
+    }
+
+    //Additional Features
+    void AddSpeed()
+    {
+        counter += Time.deltaTime;
+
+        if(counter >= 10)
+        {
+            maxSpeed += 1;
+            counter = 0;
+        }
     }
 
     private void GameOver()
